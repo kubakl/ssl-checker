@@ -12,7 +12,6 @@ import (
 )
 
 var (
-  email = flag.String("e", "", "Email address for sending expiry date of provided domains")
   domain = flag.String("d", "", "Single domain to be checked, in case you don't have a file containing domain names")
   filename = flag.String("f", "", "Route to a file with domains to check")
   left = flag.Bool("l", false, "Is going to return number of days left until the certificate expires instead of the expiry date")

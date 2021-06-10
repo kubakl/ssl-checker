@@ -58,7 +58,9 @@ func main() {
         os.Exit(2)
       } else {
         l := int(ex.Sub(time.Now()).Hours() / 24)
-        sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+        if l <= emailJson.AlertBefore {
+          sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+        }
         if left {
           fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
         } else {
@@ -89,8 +91,11 @@ func main() {
         if err != nil {
           fmt.Printf("%s: %s\n", domain, err)
         } else {
+          l := int(ex.Sub(time.Now()).Hours() / 24)
+          if l <= emailJson.AlertBefore {
+            sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+          }
           if left {
-            l := int(ex.Sub(time.Now()).Hours() / 24)
             fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
           } else {
             fmt.Printf("%s: %s\n", domain, ex)

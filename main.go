@@ -46,7 +46,7 @@ func sslCheck(url string) (time.Time, error) {
 func main() {
   var wg sync.WaitGroup
   flag.Parse()
-  emailJson := parseJsonFile(*email)
+  var emailJson Config
   if *domain != "" && *filename != "" {
     fmt.Println("You can't choose both -d and -f flag at the same time.")
     os.Exit(2)
@@ -58,8 +58,11 @@ func main() {
         os.Exit(2)
       } else {
         l := int(ex.Sub(time.Now()).Hours() / 24)
-        if l <= emailJson.AlertBefore {
-          sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+        if *email != "" {
+          emailJson = parseJsonFile(*email)
+          if l <= emailJson.AlertBefore {
+            sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+          }
         }
         if left {
           fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
@@ -92,8 +95,11 @@ func main() {
           fmt.Printf("%s: %s\n", domain, err)
         } else {
           l := int(ex.Sub(time.Now()).Hours() / 24)
-          if l <= emailJson.AlertBefore {
-            sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+          if *email != "" {
+            emailJson = parseJsonFile(*email)
+            if l <= emailJson.AlertBefore {
+              sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
+            }
           }
           if left {
             fmt.Printf("%s: %s | %d days left\n", domain, ex, l)

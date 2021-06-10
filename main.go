@@ -128,6 +128,10 @@ func parseJsonFile(file string) Config {
   }
   byteValue, _ := ioutil.ReadAll(readFile)
   var config Config
-  json.Unmarshal(byteValue, &config)
+  
+  if err := json.Unmarshal(byteValue, &config); err != nil {
+    fmt.Println("Failed to parse the email configuration file.")
+    os.Exit(2)
+  }
   return config
 }

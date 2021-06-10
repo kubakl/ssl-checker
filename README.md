@@ -36,7 +36,7 @@ www.bar.org
 ```
 <h3>Sample file with email config:</h3>
 
-```json
+```js
 {
 	"sender_email": "foo@bar.com", // your email address
 	"sender_password": "foobar", // your password for the email

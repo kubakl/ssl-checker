@@ -1,6 +1,7 @@
 package main
 
 import (
+  "encoding/json"
   "fmt"
   "flag"
   "os"
@@ -9,12 +10,24 @@ import (
   "errors"
   "bufio"
   "sync"
+  "net/smtp"
+  "io/ioutil"
 )
+
+type Config struct {
+  Email       string `json:"sender_email"` 
+  Password    string `json:"sender_password"`
+  Host        string `json:"smtp_host"`
+  Port        string `json:"smtp_port"`
+  Receivers   []string `json:"receivers"`
+  AlertBefore int `json:"alert_before"`
+}
 
 var (
   domain = flag.String("d", "", "Single domain to be checked, in case you don't have a file containing domain names")
   filename = flag.String("f", "", "Route to a file with domains to check")
   left = flag.Bool("l", false, "Is going to return number of days left until the certificate expires instead of the expiry date")
+  email = flag.String("e", "", "Route to a JSON file with email configuration")
 )
 
 func sslCheck(url string) (time.Time, error) {
@@ -33,7 +46,7 @@ func sslCheck(url string) (time.Time, error) {
 func main() {
   var wg sync.WaitGroup
   flag.Parse()
-
+  emailJson := parseJsonFile(*email)
   if *domain != "" && *filename != "" {
     fmt.Println("You can't choose both -d and -f flag at the same time.")
     os.Exit(2)
@@ -44,9 +57,10 @@ func main() {
         fmt.Printf("%s: %s\n", domain, err)
         os.Exit(2)
       } else {
+        l := int(ex.Sub(time.Now()).Hours() / 24)
+        sendMail(emailJson.Email, emailJson.Password, emailJson.Host, emailJson.Port, domain, emailJson.Receivers, l)
         if left {
-          left := ex.Sub(time.Now()) 
-          fmt.Printf("%s: %s | %d days left\n", domain, ex, int(left.Hours()) / 24)
+          fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
         } else {
           fmt.Printf("%s: %s\n", domain, ex)
         }
@@ -58,7 +72,7 @@ func main() {
     fmt.Println("Reading from file:", *filename) 
     readFile, err := os.Open(*filename)
     if err != nil {
-      fmt.Println("Wrong filename was provided.")
+      fmt.Println("Couln't find the file with domain names.")
     }
     fileScanner := bufio.NewScanner(readFile)
     fileScanner.Split(bufio.ScanLines)
@@ -76,8 +90,8 @@ func main() {
           fmt.Printf("%s: %s\n", domain, err)
         } else {
           if left {
-            left := ex.Sub(time.Now()) 
-            fmt.Printf("%s: %s | %d days left\n", domain, ex, int(left.Hours()) / 24)
+            l := int(ex.Sub(time.Now()).Hours() / 24)
+            fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
           } else {
             fmt.Printf("%s: %s\n", domain, ex)
           }
@@ -86,4 +100,29 @@ func main() {
     }
     wg.Wait()
   }
+}
+
+func sendMail(sender, password, host, port, domain string, receiver []string, left int) string {
+  auth := smtp.PlainAuth("", sender, password, host)
+  msg := fmt.Sprintf("Certificate on %s is going to expire in %d days", domain, left)
+  body := []byte(msg)
+
+  err :=  smtp.SendMail(host + ":" + port, auth, sender, receiver, body)
+  if err != nil {
+    return "Couldn't send the email"
+  }
+  return "Email was sent successfully"
+}
+
+func parseJsonFile(file string) Config {
+  readFile, err := os.Open(file)
+  defer readFile.Close()
+  if err != nil {
+    fmt.Println("Couldn't find the email configuration file.")
+    os.Exit(2)
+  }
+  byteValue, _ := ioutil.ReadAll(readFile)
+  var config Config
+  json.Unmarshal(byteValue, &config)
+  return config
 }

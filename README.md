@@ -9,7 +9,9 @@ This tool is created to see your domain's SSL certificates expiry date. It allow
 	<li>e -> provide a JSON file with email config.</li>
 </ul>
 <h3>Examples:</h3>
-```./ssl-check -d www.foobar.com```
+```zsh
+./ssl-check -d www.foobar.com
+```
 ```./ssl-check -d www.foobar.com -l```
 ```./ssl-check -f myDomains.txt```
 ```./ssl-check -f myDomains.txt -l```

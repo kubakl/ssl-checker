@@ -27,7 +27,7 @@ Providing a config file for email notifications:
 ```
 <h3>Sample file with domains:</h3>
 
-```txt
+```js
 //You have to pass domains line by line
 www.foo.com
 www.bar.com

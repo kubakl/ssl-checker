@@ -57,7 +57,13 @@ If you have directories with your domains:
 ```shell
 ls | xargs -n1 ./ssl-check -l -d
 ```
+```shell
+ls | xargs -I % ./ssl-check -d % -l
+```
 If you have several files with domain names inside:
 ```shell
 ls | xargs -n1 ./ssl-check -l -f
+```
+```shell
+ls | xargs -I % ./ssl-check -f % -l
 ```

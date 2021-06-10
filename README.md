@@ -27,8 +27,8 @@ Providing a config file for email notifications:
 ```
 <h3>Sample file with domains:</h3>
 
-```js
-//You have to pass domains line by line
+You have to pass domains line by line
+```txt
 www.foo.com
 www.bar.com
 www.foo.org
@@ -37,6 +37,7 @@ www.bar.org
 <h3>Sample file with email config:</h3>
 
 ```js
+// config.json
 {
 	"sender_email": "foo@bar.com", // your email address
 	"sender_password": "foobar", // your password for the email
@@ -47,6 +48,16 @@ www.bar.org
 		"foo1@bar.com"
 	],
 	"alert_before": 14 // will send an email 14 days before the expiration
-}
+} 
 ```
 NOTE: If you are not using your local smtp server you have to make sure to allow the access for third party applications in your mail account.
+<h3>Using xargs</h3>
+
+If you have directories with your domains:
+```shell
+ls | xargs -n1 ./ssl-check -l -d
+```
+If you have several files with domain names inside:
+```shell
+ls | xargs -n1 ./ssl-check -l -f
+```

@@ -1,2 +1,15 @@
-<h1 style="color: #b761e2">Usage:</h1>
-<h4>This tool allows you to check your domain's ssl certificate expiry date and inform you about it via email one week before the expiration.</h4>
+<h1>About:</h1>
+This tool is created to see your domain's SSL certificates expiry date. It allows you configuring email alerting system, so you don't miss your certificate's expiry date. You can check domains one by one or provide a file with all of your domains so the app can check it automatically.
+<h1>Usage:</h1>
+<h3>Flags:</h3>
+<ul>
+	<li>d -> provide one single domain.</li>
+	<li>f -> provide a file with domains.</li>
+	<li>l -> will additionally display a number of days until the certificate expires.</li>
+	<li>e -> provide a JSON file with email config.</li>
+</ul>
+<h3>Examples:</h3>
+```./ssl-check -d www.foobar.com```
+```./ssl-check -d www.foobar.com -l```
+```./ssl-check -f myDomains.txt```
+```./ssl-check -f myDomains.txt -l```

@@ -77,7 +77,7 @@ func main() {
     fmt.Println("Reading from file:", *filename) 
     readFile, err := os.Open(*filename)
     if err != nil {
-      fmt.Println("Couln't find the file with domain names.")
+      fmt.Println("No file named:", *filename)
     }
     fileScanner := bufio.NewScanner(readFile)
     fileScanner.Split(bufio.ScanLines)

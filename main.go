@@ -12,6 +12,7 @@ import (
   "sync"
   "net/smtp"
   "io/ioutil"
+  "github.com/fatih/color"
 )
 
 type Config struct {
@@ -54,7 +55,7 @@ func main() {
     func(domain string, left bool) {
       ex, err := sslCheck(domain) 
       if err != nil {
-        fmt.Printf("%s: %s\n", domain, err)
+        fmt.Printf("%s: %s\n", color.RedString(domain), err)
         os.Exit(2)
       } else {
         l := int(ex.Sub(time.Now()).Hours() / 24)
@@ -65,19 +66,19 @@ func main() {
           }
         }
         if left {
-          fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
+          fmt.Printf("%s: %s | %d days left\n", color.GreenString(domain), color.YellowString(ex.String()), l)
         } else {
-          fmt.Printf("%s: %s\n", domain, ex)
+          fmt.Printf("%s: %s\n", color.GreenString(domain), color.YellowString(ex.String()))
         }
       }
     }(*domain, *left)
   } else if *domain == "" && *filename == "" {
     fmt.Println("You have to provide a single domain (-d flag) or a file that contain domains (-f flag)")
   } else if *filename != "" {
-    fmt.Println("Reading from file:", *filename) 
+    fmt.Println("Reading from file:", color.MagentaString(*filename)) 
     readFile, err := os.Open(*filename)
     if err != nil {
-      fmt.Println("No file named:", *filename)
+      fmt.Println("No file named:", color.RedString(*filename))
     }
     fileScanner := bufio.NewScanner(readFile)
     fileScanner.Split(bufio.ScanLines)
@@ -92,7 +93,7 @@ func main() {
         defer wg.Done() 
         ex, err := sslCheck(domain) 
         if err != nil {
-          fmt.Printf("%s: %s\n", domain, err)
+          fmt.Printf("%s: %s\n", color.RedString(domain), err)
         } else {
           l := int(ex.Sub(time.Now()).Hours() / 24)
           if *email != "" {
@@ -102,9 +103,9 @@ func main() {
             }
           }
           if left {
-            fmt.Printf("%s: %s | %d days left\n", domain, ex, l)
+            fmt.Printf("%s: %s | %d days left\n", color.GreenString(domain), color.YellowString(ex.String()), l)
           } else {
-            fmt.Printf("%s: %s\n", domain, ex)
+            fmt.Printf("%s: %s\n", color.GreenString(domain), color.YellowString(ex.String()))
           }
         }
       }(line, *left)

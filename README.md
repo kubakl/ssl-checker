@@ -17,25 +17,25 @@ sudo make install
 
 This will display the expiration date of the certificate on www.foobar.com:
 ```shell
-./ssl-check -d www.foobar.com
+ssl-check -d www.foobar.com
 ```
 Providing a file with domains instead of passing them one by one:
 ```shell
-./ssl-check -f myDomains.txt 
+ssl-check -f myDomains.txt 
 ```
 Displaying number of days left before the certificate will expire:
 ```shell
-./ssl-check -d www.foobar.com -l
+ssl-check -d www.foobar.com -l
 ```
 ```shell
-./ssl-check -f myDomains.txt -l
+ssl-check -f myDomains.txt -l
 ```
 Providing a config file for email notifications:
 ```shell
-./ssl-check -f myDomains.txt -l -e config.json
+ssl-check -f myDomains.txt -l -e config.json
 ```
 ```shell
-./ssl-check -d www.foobar.com -l -e config.json
+ssl-check -d www.foobar.com -l -e config.json
 ```
 <h3>Sample file with domains:</h3>
 
@@ -67,15 +67,15 @@ NOTE: If you are not using your local smtp server you have to make sure to allow
 
 If you have directories with your domains:
 ```shell
-ls | xargs -n1 ./ssl-check -l -d
+ls | xargs -n1 ssl-check -l -d
 ```
 ```shell
-ls | xargs -I % ./ssl-check -d % -l
+ls | xargs -I % ssl-check -d % -l
 ```
 If you have several files with domain names inside:
 ```shell
-ls | xargs -n1 ./ssl-check -l -f
+ls | xargs -n1 ssl-check -l -f
 ```
 ```shell
-ls | xargs -I % ./ssl-check -f % -l
+ls | xargs -I % ssl-check -f % -l
 ```

@@ -1,5 +1,11 @@
 <h1>About:</h1>
 This tool is created to check your domain's SSL certificates expiry date. It allows you configuring email alerting system, so you don't miss your certificate's expiry date. You can check domains one by one or provide a file with all of your domains so the app can check it automatically.
+<h1>Installation:</h1>
+
+For now the makefile is only available for debian based distributions!
+```shell
+sudo make install
+```
 <h1>Usage:</h1>
 <h3>Flags:</h3>
 

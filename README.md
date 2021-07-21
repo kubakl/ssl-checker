@@ -4,6 +4,12 @@ This tool is created to check your domain's SSL certificates expiry date. It all
 
 The app can be used on linux and MacOs 
 ```shell
+git clone git@github.com:kubakl/ssl-checker.git
+```
+```shell
+cd ssl-checker
+```
+```shell
 sudo make install
 ```
 <h1>Usage:</h1>

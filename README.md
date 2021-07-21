@@ -2,7 +2,7 @@
 This tool is created to check your domain's SSL certificates expiry date. It allows you configuring email alerting system, so you don't miss your certificate's expiry date. You can check domains one by one or provide a file with all of your domains so the app can check it automatically.
 <h1>Installation:</h1>
 
-For now the makefile is only available for debian based distributions!
+The app can be used on linux and MacOs 
 ```shell
 sudo make install
 ```

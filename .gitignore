@@ -1,3 +1,4 @@
 ssl-check
 main
 .env
+snapcraft.yaml

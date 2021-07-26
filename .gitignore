@@ -2,3 +2,4 @@ ssl-check
 main
 .env
 snapcraft.yaml
+ssl-check_0+git.1b87d99_amd64.snap

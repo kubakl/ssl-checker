@@ -6,10 +6,7 @@ With snap:
 ```shell
 sudo snap install ssl-check --beta --devmode
 ```
-
-<h2>OR</h2>
-
-Build from source:
+Build from source:  
 This installation method works on Linux and MacOs. **Having golang installed and added to the $PATH is required**
 ```shell
 git clone git@github.com:kubakl/ssl-checker.git

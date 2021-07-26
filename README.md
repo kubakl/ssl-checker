@@ -2,7 +2,11 @@
 This tool is created to check your domain's SSL certificates expiry date. It allows you configuring email alerting system, so you don't miss your certificate's expiry date. You can check domains one by one or provide a file with all of your domains so the app can check it automatically.
 <h1>Installation:</h1>
 
-The installation works on Linux and MacOs. **Having golang installed and added to the $PATH is required**
+With snap:
+```shell
+sudo snap install ssl-check --beta --devmode
+```
+This installation method works on Linux and MacOs. **Having golang installed and added to the $PATH is required**
 ```shell
 git clone git@github.com:kubakl/ssl-checker.git
 ```

@@ -1,0 +1,18 @@
+name: ssl-check
+version: git
+summary: A command line tool for monitoring ssl certificates.
+description: |
+  SSL-CHECK allows you checking your ssl certificates' expiry date, it also has builtin email alerting that you can configure as you want. More info here, https://github.com/kubakl/ssl-checker 
+base: core18
+confinement: classic
+parts:
+  ssl-check:
+    plugin: go
+    go-importpath: ssl-check
+    source: .
+    source-type: git
+    build-packages:
+      - gcc
+apps:
+  ssl-check:
+    command: bin/ssl-check

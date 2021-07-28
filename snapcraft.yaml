@@ -11,6 +11,10 @@ parts:
     go-importpath: ssl-check
     source: .
     source-type: git
+    plugs:
+      - network
+      - network-control
+      - home
     build-packages:
       - gcc
 apps:

@@ -4,7 +4,7 @@ summary: A command line tool for monitoring ssl certificates.
 description: |
   SSL-CHECK allows you checking your ssl certificates' expiry date, it also has builtin email alerting that you can configure as you want. More info here, https://github.com/kubakl/ssl-checker 
 base: core18
-confinement: strict
+confinement: devmode
 parts:
   ssl-check:
     plugin: go

@@ -116,7 +116,7 @@ func main() {
 
 func sendMail(sender, password, host, port, domain string, receiver []string, left int) string {
   auth := smtp.PlainAuth("", sender, password, host)
-  msg := fmt.Sprintf("Certificate on %s is going to expire in %d days", domain, left)
+  msg := fmt.Sprintf("To: %s\r\nSubject: Your certificate on %s is going to expire\r\n Certificate on %s is going to expire in %d days\r\n", receiver, domain, domain, left)
   body := []byte(msg)
 
   err :=  smtp.SendMail(host + ":" + port, auth, sender, receiver, body)
